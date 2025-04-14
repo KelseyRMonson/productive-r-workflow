@@ -217,3 +217,8 @@ summary(data)
 # → Specify column types:
   # readxl is pretty good at guessing. But you can specify manually:
   data <- read_excel("data.xlsx", col_types = c("date", "skip", "guess", "numeric"))
+
+ ### I finally get Git?? ----
+  # You can use GitHub Desktop to LINK your local project folder with GitHub
+  # That way you can still run your code and analyses locally
+  # But update the code on GitHub with a commit!
