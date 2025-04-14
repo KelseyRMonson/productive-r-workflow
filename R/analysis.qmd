@@ -29,6 +29,7 @@ editor: visual
 ## A few considerations before we begin
 
 This exercise is being used for examples in the Productive R Course. It is teaching me how to use Quarto and GitHub.
+This is still a work in progress!
 :::
 
 ## Introduction
