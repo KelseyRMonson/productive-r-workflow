@@ -1,7 +1,0 @@
-"0","# load the tidyverse"
-"0","library(tidyverse)"
-"0","library(hrbrthemes) # ipsum theme for ggplot2 charts"
-"0","library(patchwork) # combine charts together"
-"0","library(DT) # Cool interactive data table"
-"0","library(knitr) # kable() for generating static table"
-"0",""
