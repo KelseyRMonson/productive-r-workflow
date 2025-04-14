@@ -1,7 +1,0 @@
-"0","#| layout-ncol: 2"
-"0",""
-"0","bill_leng_spec <- data %>%"
-"0","  group_by(species) %>%"
-"0","  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))"
-"0",""
-"0","kable(bill_leng_spec)"
