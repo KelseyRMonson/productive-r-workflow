@@ -1,0 +1,146 @@
+---
+title: "Penguin Analysis"
+subtitle: "For Productive R Workflow course"
+description: "This is the example exercise for using Quarto in your R workflow"
+
+author: "Kelsey Monson"
+affiliation: "Icahn School of Medicine at Mount Sinai"
+email: kelsey.monson@mssm.edu
+
+title-block-banner: "#f0f3f5"
+title-block-banner-color: "black"
+
+keywords: "Quarto, Data Analysis"
+date: today
+
+format: 
+  html: 
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    number-sections: true
+    css: style.css
+    
+fig-cap-location: margin
+editor: visual
+---
+
+::: {.callout-note collapse="true"}
+## A few considerations before we begin
+
+This exercise is being used for examples in the Productive R Course
+:::
+
+## Introduction
+
+This document was generated as a part of the [Productive R Workflow](https://www.productive-r-workflow.com/) course.
+
+For now it includes our current penguin analysis code below, using the [palmerpenguins dataset](https://allisonhorst.github.io/palmerpenguins/).
+
+First, we load our libraries:
+
+```{r, label='my-chunk', warning=FALSE, message=FALSE}
+# load the tidyverse
+library(tidyverse)
+library(hrbrthemes) # ipsum theme for ggplot2 charts
+library(patchwork) # combine charts together
+library(DT) # Cool interactive data table
+library(knitr) # kable() for generating static table
+library(plotly) # interactive plots
+
+```
+
+## Data Loading
+
+We loaded and cleaned the dataset in a previous step of the course.
+
+Let's load the clean version here and name it `data`, and load in the function we created in `functions.R`
+
+```{r}
+# Source functions
+source(file = "functions.R")
+
+# Read the clean dataset
+data <- readRDS(file = "../input/clean_data.rds")
+
+```
+
+Note that `bill_length_mm` and `bill_depth_mm` have the following definitions:
+
+![Bill measurement explanation](asset/culmen_depth.png){width="300"}
+
+Here is a searchable version of the original dataset:
+
+```{r}
+# Make interactive table
+datatable(data, 
+          filter="top",
+          selection = "multiple",
+          options=list(pageLength=5))
+```
+
+## Bill Length: Descriptive Analytics
+
+Now let's create some descriptive analyses about bill length, including **summary statistics** and **graphs**.
+
+What's striking is the **slightly negative relationship** between `bill lenghth` and `bill depth`. One could definitely expect the opposite.
+
+```{r, fig.align='center', fig.width=5, fig.height=5, warning=FALSE, fig.cap="Relationship between bill **length** and bill **depth**. **All** data points included."}
+
+p <- data %>%
+  ggplot(
+    aes(x = bill_length_mm, y = bill_depth_mm)
+  ) +
+  geom_point(color="#69b3a2") +
+  labs(
+      x = "Bill Length (mm)",
+      y = "Bill Depth (mm)",
+      title = paste("Surprising relationship?")
+  ) + 
+  yan_holtz_theme()
+
+ggplotly(p)
+```
+
+It is also interesting to note that `bill length` a and `bill depth` are quite different from one specie to another. 
+
+The average of a variable can be computed as follows: $${\displaystyle Avg={\frac {1}{n}}\sum _{i=1}^{n}a_{i}={\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}}$$
+
+`bill length` and `bill depth` averages are summarized in the 2 tables below:
+
+```{r}
+#| layout-ncol: 2
+
+bill_leng_spec <- data %>%
+  group_by(species) %>%
+  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+kable(bill_leng_spec)
+
+bill_depth_spec <- data %>%
+  group_by(species) %>%
+  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE))
+
+kable(bill_depth_spec)
+
+avg_Adelie <- data %>%
+  na.omit() %>%
+  filter(species == "Adelie") %>%
+  summarise(average_bill_depth = mean(bill_depth_mm)) %>%
+  pull(average_bill_depth) %>%
+  round(2)
+
+```
+
+The average depth for species `Adelie` is `r avg_Adelie`.
+
+Now, let's check the relationship between bill depth and bill length for the specie `Adelie` on the island `Torgersen`:
+
+```{r, warning=FALSE, fig.height=3,fig.width=9, fig.cap="There is actually a positive correlation when split by species."}
+# Use the function in functions.R
+p1 <- color_scatterplot(data, "Adelie", "#6689c6")
+p2 <- color_scatterplot(data, "Chinstrap", "#e85252")
+p3 <- color_scatterplot(data, "Gentoo", "#9a6fb0")
+
+p1 + p2 + p3
+```

@@ -1,0 +1,8 @@
+"0",""
+"0","avg_Adelie <- data %>%"
+"0","  na.omit() %>%"
+"0","  filter(species == ""Adelie"") %>%"
+"0","  summarise(average_bill_depth = mean(bill_depth_mm)) %>%"
+"0","  pull(average_bill_depth) %>%"
+"0","  round(2)"
+"0",""
