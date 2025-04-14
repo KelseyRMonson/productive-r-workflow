@@ -65,9 +65,11 @@ data <- readRDS(file = "../input/clean_data.rds")
 
 ```
 
+:::{.callout-note}
 Note that `bill_length_mm` and `bill_depth_mm` have the following definitions:
 
 ![Bill measurement explanation](asset/culmen_depth.png){width="300"}
+::: 
 
 Here is a searchable version of the original dataset:
 
