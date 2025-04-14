@@ -25,10 +25,10 @@ fig-cap-location: margin
 editor: visual
 ---
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true" appearance="minimal"}
 ## A few considerations before we begin
 
-This exercise is being used for examples in the Productive R Course
+This exercise is being used for examples in the Productive R Course. It is teaching me how to use Quarto and GitHub.
 :::
 
 ## Introduction
@@ -102,7 +102,7 @@ p <- data %>%
 ggplotly(p)
 ```
 
-It is also interesting to note that `bill length` a and `bill depth` are quite different from one specie to another. 
+It is also interesting to note that `bill length` a and `bill depth` are quite different from one specie to another.
 
 The average of a variable can be computed as follows: $${\displaystyle Avg={\frac {1}{n}}\sum _{i=1}^{n}a_{i}={\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}}$$
 
